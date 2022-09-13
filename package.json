@@ -1,0 +1,44 @@
+{
+  "name": "@innofake/js-utilities",
+  "version": "1.0.0",
+  "description": "A collection of exported utility functions for use with JavaScript and/or TypeScript",
+  "main": "dist/index.js",
+  "exports": {
+    "./*": "./dist/*"
+  },
+  "scripts": {
+    "prepare": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting Typescript compile\" && tsc && echo \" Made in prepare \" > ./dist/_prepare_gen_ ))",
+    "clean": "npx rimraf dist docs",
+    "build": "npm run compile && npm run docs",
+    "compile": "npm run clean && tsc",
+    "docs:readme": "npx -p @innofake/jsdoc-markdown jsdoc-markdown --importRoot @innofake/js-utilities && npx copyfiles -u 1 src/README.md .",
+    "docs:html": "npx -p markdown-styles generate-md --layout github --input README.md --output docs",
+    "docs:rename": "npx renamer --find README --replace index docs/README.html",
+    "docs": "npm run docs:readme && npm run docs:html && npm run docs:rename",
+    "test": "jest --passWithNoTests --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innofake/js-utilities.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innofake/js-utilities/issues"
+  },
+  "homepage": "https://github.com/innofake/js-utilities#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.0",
+    "@innofake/jsdoc-markdown": "^1.0.0",
+    "babel-jest": "^27.0.0",
+    "@babel/preset-env": "^7.19.0",
+    "copyfiles": "^2.4.1",
+    "markdown-styles": "^3.2.0",
+    "renamer": "^4.0.0",
+    "jest": "^27.0.0",
+    "jest-github-actions-reporter": "^1.0.3",
+    "jest-playwright-preset": "^1.5.1",
+    "ts-jest": "^27.0.0"
+  }
+}
